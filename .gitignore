@@ -1,0 +1,32 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.swp
+
+# NuGet packaging output
+packages/
+*.nupkg
+
+# Node / TypeScript (npm/ folder)
+node_modules/
+dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+.npmrc.local
+
+# vitest / jest
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env
+.env
+.env.local
+npm/.npmrc

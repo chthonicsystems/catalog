@@ -1,0 +1,90 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-dotnet:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    env:
+      GITHUB_USERNAME: chthonicsystems
+      GITHUB_PACKAGES_PAT: ${{ secrets.GHPR_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - run: dotnet build --configuration Release
+      - run: dotnet test --no-build --configuration Release
+
+  test-npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@chthonicsystems'
+      - working-directory: npm
+        run: |
+          npm ci || npm install
+          npm run build
+          npm test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GHPR_TOKEN }}
+
+  publish-nuget:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test-dotnet]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      GITHUB_USERNAME: chthonicsystems
+      GITHUB_PACKAGES_PAT: ${{ secrets.GHPR_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - run: dotnet pack src/Chthonic.Catalog/Chthonic.Catalog.csproj --configuration Release -o ./packages
+      - name: Push to GitHub Packages
+        run: |
+          dotnet nuget push './packages/*.nupkg' \
+            --api-key ${{ secrets.GITHUB_TOKEN }} \
+            --source https://nuget.pkg.github.com/chthonicsystems/index.json \
+            --skip-duplicate
+
+  publish-npm:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test-npm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@chthonicsystems'
+      - working-directory: npm
+        run: |
+          NODE_AUTH_TOKEN=${{ secrets.GHPR_TOKEN }} npm ci || NODE_AUTH_TOKEN=${{ secrets.GHPR_TOKEN }} npm install
+          npm run build
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,48 @@
+{
+  "name": "@chthonicsystems/catalog",
+  "version": "0.1.0",
+  "description": "Service & Product Catalog. See RFC 0021.",
+  "license": "MIT",
+  "author": "Chthonic Systems",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chthonicsystems/catalog.git"
+  },
+  "homepage": "https://github.com/chthonicsystems/architecture/blob/main/rfcs/0021-catalog.md",
+  "keywords": [
+    "catalog",
+    "services",
+    "products",
+    "react",
+    "chthonic"
+  ]
+}

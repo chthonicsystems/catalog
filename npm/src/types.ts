@@ -144,3 +144,59 @@ export interface CatalogHttpAdapter {
   put(url: string, body: unknown): Promise<Response | undefined>;
   delete(url: string): Promise<Response | undefined>;
 }
+
+// ---- Service packages (v0.2.0 / RFC 0034) ----
+
+export interface ServicePackageItem {
+  servicePackageItemId: number;
+  /** Set when the component is a ServiceItem. XOR with productVariantId. */
+  serviceItemId?: number | null;
+  /** Set when the component is a ProductVariant. XOR with serviceItemId. */
+  productVariantId?: number | null;
+  quantity: number;
+  displayOrder: number;
+  /** Component display name (detail endpoint only). */
+  name?: string | null;
+  /** Component unit amount — ServiceItem.cost or ProductVariant.price (detail endpoint only). */
+  unitAmount?: number | null;
+}
+
+export interface ServicePackage {
+  servicePackageId: number;
+  /** Optional owning Service — null for standalone packages (RFC 0034 § 12h). */
+  serviceId?: number | null;
+  name: string;
+  description?: string | null;
+  isActive: boolean;
+  displayOrder: number;
+  /** List endpoint projects the count; detail endpoint projects items. */
+  itemCount?: number;
+  /** Sum-of-components total (detail endpoint only; RFC 0034 § 3). */
+  totalAmount?: number;
+  items?: ServicePackageItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ServicePackageItemInput {
+  serviceItemId?: number | null;
+  productVariantId?: number | null;
+  quantity: number;
+}
+
+export interface CreateServicePackageRequest {
+  name: string;
+  description?: string | null;
+  serviceId?: number | null;
+  items: ServicePackageItemInput[];
+  isActive?: boolean;
+}
+
+export interface UpdateServicePackageRequest {
+  name: string;
+  description?: string | null;
+  serviceId?: number | null;
+  /** When present, atomically replaces the package's component rows. */
+  items?: ServicePackageItemInput[];
+  isActive?: boolean;
+}

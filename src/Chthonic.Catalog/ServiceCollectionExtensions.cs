@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<ICatalogServiceService, CatalogServiceService>();
         services.AddScoped<ICatalogProductService, CatalogProductService>();
+        services.AddScoped<IServicePackageService, ServicePackageService>(); // v0.2.0 (RFC 0034)
         return services;
     }
 }

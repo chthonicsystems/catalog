@@ -1,6 +1,6 @@
 {
   "name": "@chthonicsystems/catalog",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Service & Product Catalog. See RFC 0021.",
   "license": "MIT",
   "author": "Chthonic Systems",

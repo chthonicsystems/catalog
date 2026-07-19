@@ -22,4 +22,4 @@ export * from './services/catalogService';
 export * from './services/servicePackageService';
 export * from './components/ServicePackagePicker';
 
-export const CATALOG_PACKAGE_VERSION = '0.2.0';
+export const CATALOG_PACKAGE_VERSION = '0.2.1';

@@ -31,23 +31,23 @@ internal static class ServicePackageEndpoints
         var group = app.MapGroup("/api/service-packages").RequireAuthorization();
 
         group.MapGet("/", async (
-            [FromQuery] bool activeOnly,
+            [FromQuery] bool? activeOnly,
             IServicePackageService svc,
             HttpContext ctx) =>
         {
             var sid = GetSystemId(ctx) ?? 0;
-            var packages = await svc.ListAsync(sid, activeOnly);
+            var packages = await svc.ListAsync(sid, activeOnly ?? false);
             return Results.Ok(packages.Select(ToDto).ToList());
         });
 
         group.MapGet("/search", async (
             [FromQuery] string? query,
-            [FromQuery] int limit,
+            [FromQuery] int? limit,
             IServicePackageService svc,
             HttpContext ctx) =>
         {
             var sid = GetSystemId(ctx) ?? 0;
-            var lim = limit > 0 ? Math.Min(limit, 200) : 50;
+            var lim = limit is > 0 ? Math.Min(limit.Value, 200) : 50;
             var packages = await svc.SearchAsync(query ?? "", sid, lim);
             return Results.Ok(packages.Select(ToDto).ToList());
         });

@@ -11,7 +11,7 @@ import {
 
 describe('@chthonicsystems/catalog package', () => {
   it('exports CATALOG_PACKAGE_VERSION', () => {
-    expect(CATALOG_PACKAGE_VERSION).toBe('0.2.0');
+    expect(CATALOG_PACKAGE_VERSION).toBe('0.2.1');
   });
 
   it('Service shape round-trips JSON', () => {

@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.1 — 2026-07-19
+
+Patch. `GET /api/service-packages` + `/search` query params
+(`activeOnly`, `limit`) made nullable — non-nullable `[FromQuery]`
+value types caused HTTP 400 when the param was omitted (caught during
+TorqueTech PR 10 local smoke).
+
 ## v0.2.0 — 2026-07-19
 
 Additive. Per [RFC 0034 — Job templates](https://github.com/chthonicsystems/architecture/blob/main/rfcs/0034-job-templates.md)

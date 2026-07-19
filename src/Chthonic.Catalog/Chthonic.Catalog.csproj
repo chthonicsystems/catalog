@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <PackageId>Chthonic.Catalog</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Chthonic Systems</Authors>
     <Company>Chthonic Systems</Company>
     <Description>Service &amp; Product Catalog for the Chthonic platform. See RFC 0021.</Description>

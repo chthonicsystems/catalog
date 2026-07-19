@@ -15,7 +15,7 @@ function jsonResponse(body: unknown, ok = true): Response {
 
 describe('@chthonicsystems/catalog service packages (v0.2.0)', () => {
   it('bumps CATALOG_PACKAGE_VERSION to 0.2.0', () => {
-    expect(CATALOG_PACKAGE_VERSION).toBe('0.2.0');
+    expect(CATALOG_PACKAGE_VERSION).toBe('0.2.1');
   });
 
   it('ServicePackage detail shape round-trips JSON', () => {
